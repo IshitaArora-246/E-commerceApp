@@ -37,35 +37,42 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("Catalog App"),
       ),
-      body: (isDataLoaded)
-          ? GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, mainAxisSpacing: 8, crossAxisSpacing: 8),
-              itemBuilder: (context, index) {
-                final item = CatalogModel.items[index];
-                return Card(
-                    elevation: 3,
-                    clipBehavior: Clip.antiAlias,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    child: GridTile(
-                      child: Image.network(item.image),
-                      header: Container(
-                        child: Text(item.name,
-                            style: TextStyle(color: Colors.white)),
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(color: Colors.blueGrey),
-                      ),
-                      footer: Container(
-                        child: Text(item.price.toString(),
-                            style: TextStyle(color: Colors.white)),
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(color: Colors.black87),
-                      ),
-                    ));
-              },
-              itemCount: CatalogModel.items.length)
-          : Center(child: CircularProgressIndicator()),
+      body: StreamBuilder<Object>(
+          stream: null,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 8,
+                      crossAxisSpacing: 8),
+                  itemBuilder: (context, index) {
+                    final item = CatalogModel.items[index];
+                    return Card(
+                        elevation: 3,
+                        clipBehavior: Clip.antiAlias,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
+                        child: GridTile(
+                          child: Image.network(item.image),
+                          header: Container(
+                            child: Text(item.name,
+                                style: TextStyle(color: Colors.white)),
+                            padding: EdgeInsets.all(12),
+                            decoration: BoxDecoration(color: Colors.blueGrey),
+                          ),
+                          footer: Container(
+                            child: Text(item.price.toString(),
+                                style: TextStyle(color: Colors.white)),
+                            padding: EdgeInsets.all(12),
+                            decoration: BoxDecoration(color: Colors.black87),
+                          ),
+                        ));
+                  },
+                  itemCount: CatalogModel.items.length);
+            }
+            return Center(child: CircularProgressIndicator());
+          }),
       drawer: Mydrawer(),
     );
   }
