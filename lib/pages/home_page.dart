@@ -1,6 +1,5 @@
 import 'package:app1/models/catalog.dart';
 import 'package:app1/widgets/drawer.dart';
-import 'package:app1/widgets/productWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
@@ -11,9 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final int days = 30;
-
-  final String name = "Mehak";
+  bool isDataLoaded = false;
 
   @override
   void initState() {
@@ -22,15 +19,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   loadData() async {
-    final catalogjJson =
+    // await Future.delayed(Duration(milliseconds: 1500));
+    final catalogJson =
         await rootBundle.loadString("assets/files/catalog.json");
-    final decodedData = jsonDecode(catalogjJson);
+    final decodedData = jsonDecode(catalogJson);
     final productsData = decodedData["products"];
-    // List<Item> list =
-    //     List.from(productsData).map((item) => Item.fromMap(item)).toList();
     CatalogModel.items = List.from(productsData)
         .map<Item>((item) => Item.fromMap(item))
         .toList();
+    isDataLoaded = true;
     setState(() {});
   }
 
@@ -40,7 +37,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("Catalog App"),
       ),
-      body: (CatalogModel != null && CatalogModel.items.isNotEmpty)
+      body: (isDataLoaded)
           ? GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, mainAxisSpacing: 8, crossAxisSpacing: 8),
