@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     loadData();
   }
 
-  loadData() async {
+  Future<int> loadData() async {
     // await Future.delayed(Duration(milliseconds: 1500));
     final catalogJson =
         await rootBundle.loadString("assets/files/catalog.json");
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
         .map<Item>((item) => Item.fromMap(item))
         .toList();
     isDataLoaded = true;
-    setState(() {});
+    return 1;
   }
 
   @override
@@ -37,8 +37,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("Catalog App"),
       ),
-      body: StreamBuilder<Object>(
-          stream: null,
+      body: FutureBuilder(
+          future: loadData(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return GridView.builder(
