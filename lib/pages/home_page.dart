@@ -41,35 +41,61 @@ class _HomePageState extends State<HomePage> {
           future: loadData(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8),
-                  itemBuilder: (context, index) {
-                    final item = CatalogModel.items[index];
-                    return Card(
-                        elevation: 3,
-                        clipBehavior: Clip.antiAlias,
-                        shape: RoundedRectangleBorder(
+              return ListView.builder(
+                itemCount: CatalogModel.items.length,
+                itemBuilder: (context, index) {
+                  final item = CatalogModel.items[index];
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    height: 120,
+                    decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Row(children: [
+                      Container(
+                        constraints: BoxConstraints(
+                            minHeight: 100,
+                            minWidth: 100,
+                            maxWidth: 100,
+                            maxHeight: 100),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(8)),
-                        child: GridTile(
-                          child: Image.network(item.image),
-                          header: Container(
-                            child: Text(item.name,
-                                style: TextStyle(color: Colors.white)),
-                            padding: EdgeInsets.all(12),
-                            decoration: BoxDecoration(color: Colors.blueGrey),
+                        child: Image.network(
+                          item.image,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10),
+                          Text(
+                            item.name,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                            ),
                           ),
-                          footer: Container(
-                            child: Text(item.price.toString(),
-                                style: TextStyle(color: Colors.white)),
-                            padding: EdgeInsets.all(12),
-                            decoration: BoxDecoration(color: Colors.black87),
-                          ),
-                        ));
-                  },
-                  itemCount: CatalogModel.items.length);
+                          SizedBox(height: 10),
+                          Text(item.desc,
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.black)),
+                          SizedBox(height: 10),
+                          Text('\$800',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500)),
+                        ],
+                      )
+                    ]),
+                  );
+                },
+              );
             }
             return Center(child: CircularProgressIndicator());
           }),
