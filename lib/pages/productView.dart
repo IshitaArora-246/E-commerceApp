@@ -20,7 +20,7 @@ class ViewProduct extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(80),
                         bottomRight: Radius.circular(80))),
-                child: Text("Image here"),
+                child: Center(child: Text("Image here")),
               ),
               SizedBox(height: 20),
               Text("Item name here",
