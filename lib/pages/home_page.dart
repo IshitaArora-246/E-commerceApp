@@ -1,4 +1,5 @@
 import 'package:app1/models/catalog.dart';
+import 'package:app1/pages/productView.dart';
 import 'package:app1/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,9 +35,23 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Catalog App"),
-      ),
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(40.0), // here the desired height
+          child: AppBar(
+            title: Text("Catalog App",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.lightBlue[900],
+                    letterSpacing: 2,
+                    fontSize: 30)),
+            backgroundColor: Colors.grey[100],
+            elevation: 0,
+            leading: Icon(
+              Icons.menu,
+              color: Colors.lightBlue[900],
+            ),
+            centerTitle: true,
+          )),
       body: FutureBuilder(
           future: loadData(),
           builder: (context, snapshot) {
@@ -45,54 +60,63 @@ class _HomePageState extends State<HomePage> {
                 itemCount: CatalogModel.items.length,
                 itemBuilder: (context, index) {
                   final item = CatalogModel.items[index];
-                  return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    height: 120,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Row(children: [
-                      Container(
-                        constraints: BoxConstraints(
-                            minHeight: 100,
-                            minWidth: 100,
-                            maxWidth: 100,
-                            maxHeight: 100),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8)),
-                        child: Image.network(
-                          item.image,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 10),
-                          Text(
-                            item.name,
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                            ),
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewProduct()));
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      height: 120,
+                      decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Row(children: [
+                        Container(
+                          constraints: BoxConstraints(
+                              minHeight: 100,
+                              minWidth: 100,
+                              maxWidth: 100,
+                              maxHeight: 100),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8)),
+                          child: Image.network(
+                            item.image,
+                            fit: BoxFit.contain,
                           ),
-                          SizedBox(height: 10),
-                          Text(item.desc,
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.black)),
-                          SizedBox(height: 10),
-                          Text('\$800',
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 10),
+                            Text(
+                              item.name,
                               style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500)),
-                        ],
-                      )
-                    ]),
+                                fontSize: 20,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(item.desc,
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.black)),
+                            SizedBox(height: 10),
+                            Text('\$800',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500)),
+                          ],
+                        )
+                      ]),
+                    ),
                   );
                 },
               );
