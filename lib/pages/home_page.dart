@@ -35,94 +35,105 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(40.0), // here the desired height
-          child: AppBar(
-            title: Text("Catalog App",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.lightBlue[900],
-                    letterSpacing: 2,
-                    fontSize: 30)),
-            backgroundColor: Colors.grey[100],
-            elevation: 0,
-            leading: Icon(
-              Icons.menu,
-              color: Colors.lightBlue[900],
+      body: SafeArea(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Builder(
+                    builder: (context) => IconButton(
+                        icon: Icon(Icons.menu),
+                        onPressed: () => Scaffold.of(context).openDrawer())),
+                Text("Catalog App",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.lightBlue[900],
+                        letterSpacing: 2,
+                        fontSize: 30)),
+              ],
             ),
-            centerTitle: true,
-          )),
-      body: FutureBuilder(
-          future: loadData(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: CatalogModel.items.length,
-                itemBuilder: (context, index) {
-                  final item = CatalogModel.items[index];
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ViewProduct()));
-                    },
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      height: 120,
-                      decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Row(children: [
-                        Container(
-                          constraints: BoxConstraints(
-                              minHeight: 100,
-                              minWidth: 100,
-                              maxWidth: 100,
-                              maxHeight: 100),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Image.network(
-                            item.image,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 10),
-                            Text(
-                              item.name,
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                              ),
+            Expanded(
+              child: FutureBuilder(
+                  future: loadData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        itemCount: CatalogModel.items.length,
+                        itemBuilder: (context, index) {
+                          final Item item = CatalogModel.items[index];
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ViewProduct(item)));
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              height: 135,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[100],
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Row(children: [
+                                Container(
+                                  constraints: BoxConstraints(
+                                      minHeight: 110,
+                                      minWidth: 110,
+                                      maxWidth: 110,
+                                      maxHeight: 110),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Image.network(
+                                    item.image,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 10),
+                                    Text(
+                                      item.name,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(item.desc,
+                                        style: TextStyle(
+                                            fontSize: 12, color: Colors.black)),
+                                    SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('\$${item.price}',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500)),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ]),
                             ),
-                            SizedBox(height: 10),
-                            Text(item.desc,
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.black)),
-                            SizedBox(height: 10),
-                            Text('\$800',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500)),
-                          ],
-                        )
-                      ]),
-                    ),
-                  );
-                },
-              );
-            }
-            return Center(child: CircularProgressIndicator());
-          }),
+                          );
+                        },
+                      );
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  }),
+            ),
+          ],
+        ),
+      ),
       drawer: Mydrawer(),
     );
   }

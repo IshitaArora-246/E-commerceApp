@@ -2,16 +2,6 @@ import 'dart:convert';
 
 class CatalogModel {
   static List<Item> items;
-  // static List<Item> items = [
-  //   Item(
-  //       id: 1,
-  //       name: "Caprese Women's bag",
-  //       desc: "Women Leather Handbag",
-  //       price: 399,
-  //       color: "pink",
-  //       image:
-  //           "https://images-na.ssl-images-amazon.com/images/I/719r0MVQ9IL._UL1500_.jpg")
-  // ];
 }
 
 class Item {
