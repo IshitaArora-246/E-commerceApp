@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'package:app1/models/catalog.dart';
 import 'package:app1/widgets/ratings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // ignore: must_be_immutable
 class ViewProduct extends StatelessWidget {
@@ -28,7 +26,7 @@ class ViewProduct extends StatelessWidget {
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(80),
                         bottomRight: Radius.circular(80))),
-                child: Center(child: Text(item.image)),
+                child: Center(child: Image.network("${item.image}")),
               ),
               SizedBox(height: 20),
               Text(item.name,
@@ -40,6 +38,10 @@ class ViewProduct extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Text(item.desc, style: (TextStyle(fontSize: 14))),
               ),
+              SizedBox(height: 10),
+              Text("Price: \$${item.price}",
+                  style:
+                      (TextStyle(fontWeight: FontWeight.bold, fontSize: 28))),
               SizedBox(height: 50),
               InkWell(
                 onTap: () {
