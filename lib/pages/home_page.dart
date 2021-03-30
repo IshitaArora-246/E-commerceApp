@@ -38,19 +38,22 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            Row(
-              children: [
-                Builder(
-                    builder: (context) => IconButton(
-                        icon: Icon(Icons.menu),
-                        onPressed: () => Scaffold.of(context).openDrawer())),
-                Text("Catalog App",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.lightBlue[900],
-                        letterSpacing: 2,
-                        fontSize: 30)),
-              ],
+            SizedBox(height: 8),
+            Container(
+              child: Row(
+                children: [
+                  Builder(
+                      builder: (context) => IconButton(
+                          icon: Icon(Icons.menu, color: Colors.lightBlue[900]),
+                          onPressed: () => Scaffold.of(context).openDrawer())),
+                  Text("Catalog App",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.lightBlue[900],
+                          letterSpacing: 2,
+                          fontSize: 30)),
+                ],
+              ),
             ),
             Expanded(
               child: FutureBuilder(

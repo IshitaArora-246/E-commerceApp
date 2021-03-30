@@ -1,4 +1,5 @@
 import 'package:app1/models/catalog.dart';
+import 'package:app1/pages/carts_page.dart';
 import 'package:app1/widgets/ratings.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,19 @@ class ViewProduct extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: 350,
+                color: Colors.grey[300],
+                child: Row(
+                  children: [
+                    IconButton(
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }),
+                  ],
+                ),
+              ),
+              Container(
+                height: 325,
                 width: double.infinity,
                 decoration: BoxDecoration(
                     color: Colors.grey[300],
@@ -32,11 +45,16 @@ class ViewProduct extends StatelessWidget {
               Text(item.name,
                   style:
                       (TextStyle(fontWeight: FontWeight.bold, fontSize: 28))),
-              Center(child: RatingBox()),
-              SizedBox(height: 5),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(item.desc, style: (TextStyle(fontSize: 14))),
+              ),
+              Center(child: RatingBox()),
+              SizedBox(height: 5),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                    "Accusam amet consetetur sit tempor diam aliquyam stet gubergren labore. Dolore sed voluptua accusam et gubergren duo justo, invidunt vero gubergren sanctus sit sed voluptua stet. Est sit sed nonumy est at takimata et ipsum duo, sit magna nonumy sed amet no. Voluptua stet clita."),
               ),
               SizedBox(height: 10),
               Text("Price: \$${item.price}",
@@ -46,6 +64,8 @@ class ViewProduct extends StatelessWidget {
               InkWell(
                 onTap: () {
                   print("added to cart");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CartPage()));
                 },
                 child: Container(
                   height: 50,
@@ -84,7 +104,8 @@ class ViewProduct extends StatelessWidget {
                             fontSize: 24)),
                   ),
                 ),
-              )
+              ),
+              SizedBox(height: 20)
             ],
           ),
         ),
