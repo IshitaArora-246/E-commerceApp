@@ -13,7 +13,7 @@ class Mydrawer extends StatelessWidget {
           padding: EdgeInsets.all(0),
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only(left: 15.0),
               child: Container(
                 height: 200,
                 child: Column(
