@@ -1,6 +1,8 @@
 import 'package:app1/models/catalog.dart';
+import 'package:app1/pages/carts_page.dart';
+import 'package:app1/pages/productView.dart';
+import 'package:app1/utils/themes.dart';
 import 'package:app1/widgets/drawer.dart';
-import 'package:app1/widgets/productWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
@@ -11,9 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final int days = 30;
-
-  final String name = "Mehak";
+  bool isDataLoaded = false;
 
   @override
   void initState() {
@@ -21,54 +21,143 @@ class _HomePageState extends State<HomePage> {
     loadData();
   }
 
-  loadData() async {
-    final catalogjJson =
+  Future<int> loadData() async {
+    // await Future.delayed(Duration(milliseconds: 1500));
+    final catalogJson =
         await rootBundle.loadString("assets/files/catalog.json");
-    final decodedData = jsonDecode(catalogjJson);
+    final decodedData = jsonDecode(catalogJson);
     final productsData = decodedData["products"];
-    // List<Item> list =
-    //     List.from(productsData).map((item) => Item.fromMap(item)).toList();
     CatalogModel.items = List.from(productsData)
         .map<Item>((item) => Item.fromMap(item))
         .toList();
-    setState(() {});
+    isDataLoaded = true;
+    return 1;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Catalog App"),
+      // backgroundColor: MyTheme.darkTheme(context).cardColor,
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(height: 8),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Builder(
+                      builder: (context) => IconButton(
+                          icon: Icon(Icons.menu, color: Colors.lightBlue[900]),
+                          onPressed: () => Scaffold.of(context).openDrawer())),
+                  Text("Catalog App",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.lightBlue[900],
+                          letterSpacing: 2,
+                          fontSize: 30)),
+                  IconButton(
+                      icon: Image.asset(
+                        "assets/images/cart-icon.png",
+                        color: MyTheme.darkTheme(context)
+                            .textTheme
+                            .headline1
+                            .color,
+                      ),
+                      onPressed: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => CartPage())))
+                ],
+              ),
+            ),
+            Expanded(
+              child: FutureBuilder(
+                  future: loadData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        itemCount: CatalogModel.items.length,
+                        itemBuilder: (context, index) {
+                          final Item item = CatalogModel.items[index];
+
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ViewProduct(item)));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 6, horizontal: 8),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                height: 135,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey[100],
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Row(children: [
+                                  Container(
+                                    constraints: BoxConstraints(
+                                        minHeight: 110,
+                                        minWidth: 110,
+                                        maxWidth: 110,
+                                        maxHeight: 110),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: Image.network(
+                                      item.image,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: 10),
+                                      Text(
+                                        item.name,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Text(item.desc,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.black)),
+                                      SizedBox(height: 10),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('\$${item.price}',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w500)),
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                ]),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  }),
+            ),
+          ],
+        ),
       ),
-      body: (CatalogModel != null && CatalogModel.items.isNotEmpty)
-          ? GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, mainAxisSpacing: 8, crossAxisSpacing: 8),
-              itemBuilder: (context, index) {
-                final item = CatalogModel.items[index];
-                return Card(
-                    elevation: 3,
-                    clipBehavior: Clip.antiAlias,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    child: GridTile(
-                      child: Image.network(item.image),
-                      header: Container(
-                        child: Text(item.name,
-                            style: TextStyle(color: Colors.white)),
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(color: Colors.blueGrey),
-                      ),
-                      footer: Container(
-                        child: Text(item.price.toString(),
-                            style: TextStyle(color: Colors.white)),
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(color: Colors.black87),
-                      ),
-                    ));
-              },
-              itemCount: CatalogModel.items.length)
-          : Center(child: CircularProgressIndicator()),
       drawer: Mydrawer(),
     );
   }

@@ -2,16 +2,14 @@ import 'dart:convert';
 
 class CatalogModel {
   static List<Item> items;
-  // static List<Item> items = [
-  //   Item(
-  //       id: 1,
-  //       name: "Caprese Women's bag",
-  //       desc: "Women Leather Handbag",
-  //       price: 399,
-  //       color: "pink",
-  //       image:
-  //           "https://images-na.ssl-images-amazon.com/images/I/719r0MVQ9IL._UL1500_.jpg")
-  // ];
+
+  Item getItembyId(int id) {
+    items.firstWhere((element) => element.id == id, orElse: null);
+  }
+
+  Item getItemByPosition(int pos) {
+    items[pos];
+  }
 }
 
 class Item {

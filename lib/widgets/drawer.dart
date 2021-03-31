@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:app1/pages/home_page.dart';
 
 class Mydrawer extends StatelessWidget {
   const Mydrawer({Key key}) : super(key: key);
@@ -13,20 +12,26 @@ class Mydrawer extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.all(0),
           children: [
-            DrawerHeader(
-              margin: EdgeInsets.all(0 ),
-              child: UserAccountsDrawerHeader(
-                margin: EdgeInsets.all(0),
-                decoration: BoxDecoration(color: Colors.transparent),
-                accountName: Text(
-                  "Mehak",
-                  style: TextStyle(color: Colors.black),
-                ),
-                accountEmail: Text("mehak_the_great24@gmail.com",
-                    style: TextStyle(color: Colors.black)),
-                currentAccountPicture: Image.asset(
-                  "assets/images/m.jpg",
-                  color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: Container(
+                height: 200,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        child: Image.asset("assets/images/m.jpg",
+                            width: 75, height: 75)),
+                    SizedBox(height: 5),
+                    Text("Myra",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500)),
+                    SizedBox(height: 5),
+                    Text("Myra1234@example.com",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w500))
+                  ],
                 ),
               ),
             ),
