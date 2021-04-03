@@ -1,3 +1,4 @@
+import 'package:app1/models/cart.dart';
 import 'package:app1/models/catalog.dart';
 import 'package:app1/pages/carts_page.dart';
 import 'package:app1/widgets/ratings.dart';
@@ -61,29 +62,9 @@ class ViewProduct extends StatelessWidget {
                   style:
                       (TextStyle(fontWeight: FontWeight.bold, fontSize: 28))),
               SizedBox(height: 50),
-              InkWell(
-                onTap: () {
-                  print("added to cart");
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CartPage()));
-                },
-                child: Container(
-                  height: 50,
-                  width: screenWidth * 0.90,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [Colors.cyan[700], Colors.lightBlue[700]]),
-                      borderRadius: BorderRadius.circular(7)),
-                  child: Center(
-                    child: Text("Add to Cart",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 24)),
-                  ),
-                ),
+              _AddToCart(
+                catalog: item,
+                screenWidth: screenWidth,
               ),
               SizedBox(height: 8),
               InkWell(
@@ -108,6 +89,64 @@ class ViewProduct extends StatelessWidget {
               SizedBox(height: 20)
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AddToCart extends StatefulWidget {
+  final Item catalog;
+
+  const _AddToCart({
+    Key key,
+    @required this.screenWidth,
+    @required this.catalog,
+  }) : super(key: key);
+
+  final double screenWidth;
+
+  @override
+  __AddToCartState createState() => __AddToCartState();
+}
+
+class __AddToCartState extends State<_AddToCart> {
+  @override
+  Widget build(BuildContext context) {
+    bool isAdded = false;
+    return InkWell(
+      onTap: () {
+        print("added to cart");
+        isAdded = true;
+        final _catalog = CatalogModel();
+        final _cart = CartModel();
+        _cart.catalog = _catalog;
+        _cart.add(widget.catalog);
+        setState(() {});
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => CartPage()));
+      },
+      child: Container(
+        height: 50,
+        width: widget.screenWidth * 0.90,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.cyan[700], Colors.lightBlue[700]]),
+            borderRadius: BorderRadius.circular(7)),
+        child: Center(
+          child: isAdded
+              ? Text("Added to cart",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 24))
+              : Text("Add to Cart",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 24)),
         ),
       ),
     );

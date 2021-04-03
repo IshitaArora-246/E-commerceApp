@@ -57,13 +57,8 @@ class _HomePageState extends State<HomePage> {
                           letterSpacing: 2,
                           fontSize: 30)),
                   IconButton(
-                      icon: Image.asset(
-                        "assets/images/cart-icon.png",
-                        color: MyTheme.darkTheme(context)
-                            .textTheme
-                            .headline1
-                            .color,
-                      ),
+                      icon: Image.asset("assets/images/cart-icon.png",
+                          color: Colors.black),
                       onPressed: () => Navigator.push(context,
                           MaterialPageRoute(builder: (context) => CartPage())))
                 ],
