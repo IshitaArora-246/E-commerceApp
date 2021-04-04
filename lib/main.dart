@@ -19,14 +19,12 @@ class MyApp extends StatelessWidget {
         fontFamily: GoogleFonts.merriweather().fontFamily,
       ),
       debugShowCheckedModeBanner: false,
-      // home: CartPage(),
       initialRoute: MyRoutes.homeRoute,
       routes: {
         "/": (context) => LoginPage(),
         MyRoutes.homeRoute: (context) => HomePage(),
         MyRoutes.loginRoute: (context) => LoginPage(),
         MyRoutes.cartRoute: (context) => CartPage(),
-        // MyRoutes.productRoute: (context) => ViewProduct(),
       },
     );
   }

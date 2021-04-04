@@ -1,7 +1,6 @@
 import 'package:app1/models/catalog.dart';
 import 'package:app1/pages/carts_page.dart';
 import 'package:app1/pages/productView.dart';
-import 'package:app1/utils/themes.dart';
 import 'package:app1/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -89,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                                     horizontal: 16, vertical: 8),
                                 height: 135,
                                 decoration: BoxDecoration(
-                                    color: Colors.grey[100],
+                                    color: Colors.grey[300],
                                     borderRadius: BorderRadius.circular(20)),
                                 child: Row(children: [
                                   Container(

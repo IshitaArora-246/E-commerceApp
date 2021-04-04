@@ -23,12 +23,21 @@ class ViewProduct extends StatelessWidget {
               Container(
                 color: Colors.grey[300],
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
                         icon: Icon(Icons.arrow_back),
                         onPressed: () {
                           Navigator.pop(context);
                         }),
+                    IconButton(
+                        icon: Image.asset("assets/images/cart-icon.png"),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (Context) => CartPage()));
+                        })
                   ],
                 ),
               ),
@@ -71,18 +80,24 @@ class ViewProduct extends StatelessWidget {
                 onTap: () {
                   print("Payment due");
                 },
-                child: Container(
-                  height: 50,
-                  width: screenWidth * 0.90,
-                  decoration: BoxDecoration(
-                      color: Colors.grey[900],
-                      borderRadius: BorderRadius.circular(7)),
-                  child: Center(
-                    child: Text("Quick buy",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 24)),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CartPage()));
+                  },
+                  child: Container(
+                    height: 50,
+                    width: screenWidth * 0.90,
+                    decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(7)),
+                    child: Center(
+                      child: Text("Quick buy",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 24)),
+                    ),
                   ),
                 ),
               ),
@@ -111,20 +126,22 @@ class _AddToCart extends StatefulWidget {
 }
 
 class __AddToCartState extends State<_AddToCart> {
+  final _cart = CartModel();
+
   @override
   Widget build(BuildContext context) {
-    bool isAdded = false;
+    bool isInCart = _cart.items.contains(widget.catalog) ?? false;
     return InkWell(
       onTap: () {
-        print("added to cart");
-        isAdded = true;
-        final _catalog = CatalogModel();
-        final _cart = CartModel();
-        _cart.catalog = _catalog;
-        _cart.add(widget.catalog);
-        setState(() {});
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => CartPage()));
+        if (!isInCart) {
+          print("added to cart");
+          final _catalog = CatalogModel();
+          isInCart = true;
+          _cart.catalog = _catalog;
+          _cart.add(widget.catalog);
+          print(_cart.items.first.name);
+          setState(() {});
+        }
       },
       child: Container(
         height: 50,
@@ -136,12 +153,14 @@ class __AddToCartState extends State<_AddToCart> {
                 colors: [Colors.cyan[700], Colors.lightBlue[700]]),
             borderRadius: BorderRadius.circular(7)),
         child: Center(
-          child: isAdded
-              ? Text("Added to cart",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 24))
+          child: isInCart
+              ? IconButton(
+                  icon: Icon(Icons.done),
+                  onPressed: () {
+                    Scaffold.of(context).showSnackBar(
+                        SnackBar(content: Text("Product added to cart")));
+                  },
+                )
               : Text("Add to Cart",
                   style: TextStyle(
                       color: Colors.white,

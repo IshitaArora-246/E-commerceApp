@@ -9,13 +9,12 @@ class CatalogModel {
 
   factory CatalogModel() => catModel;
 
-  Item getItembyId(int id) {
-    items.firstWhere((element) => element.id == id, orElse: null);
-  }
+  // Get Item by ID
+  Item getById(int id) =>
+      items.firstWhere((element) => element.id == id, orElse: null);
 
-  Item getItemByPosition(int pos) {
-    items[pos];
-  }
+  // Get Item by position
+  Item getByPosition(int pos) => items[pos];
 }
 
 class Item {
