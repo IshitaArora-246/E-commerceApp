@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       themeMode: ThemeMode.light,
       theme: ThemeData(
-        accentColor: Colors.red,
+        accentColor: Colors.lightBlue[800].withOpacity(0.2),
         fontFamily: GoogleFonts.merriweather().fontFamily,
       ),
       debugShowCheckedModeBanner: false,

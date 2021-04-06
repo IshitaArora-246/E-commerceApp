@@ -2,12 +2,14 @@ import 'package:app1/models/cart.dart';
 import 'package:app1/models/catalog.dart';
 import 'package:app1/pages/carts_page.dart';
 import 'package:app1/widgets/ratings.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class ViewProduct extends StatelessWidget {
   bool isDataLoaded = false;
   Item item;
+  final _cart = CartModel();
 
   ViewProduct(this.item);
 
@@ -21,6 +23,7 @@ class ViewProduct extends StatelessWidget {
           child: Column(
             children: [
               Container(
+                padding: EdgeInsets.only(right: 15, top: 8),
                 color: Colors.grey[300],
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,14 +33,23 @@ class ViewProduct extends StatelessWidget {
                         onPressed: () {
                           Navigator.pop(context);
                         }),
-                    IconButton(
-                        icon: Image.asset("assets/images/cart-icon.png"),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (Context) => CartPage()));
-                        })
+                    Badge(
+                      toAnimate: true,
+                      animationType: BadgeAnimationType.scale,
+                      badgeColor: Colors.lightBlue[900],
+                      borderRadius: BorderRadius.circular(8),
+                      badgeContent: Text("${_cart.items.length}",
+                          style: TextStyle(color: Colors.white)),
+                      position: BadgePosition.topEnd(end: -5, top: -5),
+                      child: IconButton(
+                          icon: Image.asset("assets/images/cart-icon.png"),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CartPage()));
+                          }),
+                    )
                   ],
                 ),
               ),

@@ -1,10 +1,12 @@
+import 'package:app1/models/cart.dart';
 import 'package:app1/models/catalog.dart';
 import 'package:app1/pages/carts_page.dart';
 import 'package:app1/pages/productView.dart';
 import 'package:app1/widgets/drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:convert';
+import 'package:badges/badges.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,8 +14,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _cart = CartModel();
   bool isDataLoaded = false;
-
+  final url = "https://api.jsonbin.io/b/604dbddb683e7e079c4eefd3";
   @override
   void initState() {
     super.initState();
@@ -21,8 +24,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<int> loadData() async {
-    final catalogJson =
-        await rootBundle.loadString("assets/files/catalog.json");
+    // final catalogJson =
+    //     await rootBundle.loadString("assets/files/catalog.json");
+
+    final response = await http.get(Uri.parse(url));
+    final catalogJson = response.body;
     final decodedData = jsonDecode(catalogJson);
     final productsData = decodedData["products"];
     CatalogModel.items = List.from(productsData)
@@ -40,6 +46,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             SizedBox(height: 8),
             Container(
+              padding: EdgeInsets.only(right: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -53,11 +60,20 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.lightBlue[900],
                           letterSpacing: 2,
                           fontSize: 30)),
-                  IconButton(
-                      icon: Image.asset("assets/images/cart-icon.png",
-                          color: Colors.black),
-                      onPressed: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => CartPage())))
+                  Badge(
+                    badgeColor: Colors.lightBlue[900],
+                    borderRadius: BorderRadius.circular(8),
+                    badgeContent: Text("${_cart.items.length}",
+                        style: TextStyle(color: Colors.white)),
+                    position: BadgePosition.topEnd(end: -5, top: -5),
+                    child: IconButton(
+                        icon: Image.asset("assets/images/cart-icon.png",
+                            color: Colors.black),
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CartPage()))),
+                  )
                 ],
               ),
             ),
@@ -120,6 +136,8 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       SizedBox(height: 10),
                                       Text(item.desc,
+                                          overflow: TextOverflow.clip,
+                                          maxLines: 3,
                                           style: TextStyle(
                                               fontSize: 12,
                                               color: Colors.black)),
