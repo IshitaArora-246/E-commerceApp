@@ -53,7 +53,8 @@ class _HomePageState extends State<HomePage> {
                   Builder(
                       builder: (context) => IconButton(
                           icon: Icon(Icons.menu, color: Colors.lightBlue[900]),
-                          onPressed: () => Scaffold.of(context).openDrawer())),
+                          onPressed: () =>
+                              Scaffold.of(context).openDrawer())),
                   Text("Catalog App",
                       textAlign: TextAlign.center,
                       style: TextStyle(
