@@ -53,7 +53,8 @@ class _HomePageState extends State<HomePage> {
                   Builder(
                       builder: (context) => IconButton(
                           icon: Icon(Icons.menu, color: Colors.lightBlue[900]),
-                          onPressed: () => Scaffold.of(context).openDrawer())),
+                          onPressed: () =>
+                              Scaffold.of(context).openDrawer())),
                   Text("Catalog App",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -120,40 +121,52 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 10,
+                                    width: 50,
                                   ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(height: 10),
-                                      Text(
-                                        item.name,
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Text(item.desc,
-                                          overflow: TextOverflow.clip,
-                                          maxLines: 3,
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.black)),
-                                      SizedBox(height: 10),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                  Expanded(
+                                    child: Container(
+                                      color: Colors.blue,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Text('\$${item.price}',
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w500)),
+                                          SizedBox(height: 10),
+                                          Text(
+                                            item.name,
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                          Container(
+                                            // width: MediaQuery.of(context)
+                                            //         .size
+                                            //         .width *
+                                            //     0.,
+                                            child: Text(item.desc,
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black)),
+                                          ),
+                                          SizedBox(height: 10),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text('\$${item.price}',
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w500)),
+                                            ],
+                                          ),
                                         ],
                                       ),
-                                    ],
+                                    ),
                                   )
                                 ]),
                               ),

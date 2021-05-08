@@ -64,7 +64,7 @@ class _CartTotal extends StatelessWidget {
               Text("\$${_cart.totalPrice}", style: TextStyle(fontSize: 28)),
               ElevatedButton(
                   onPressed: () {
-                    Scaffold.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text("Buying is not supported yet!")));
                   },
                   child: Padding(

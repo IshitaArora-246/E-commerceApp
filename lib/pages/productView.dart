@@ -169,7 +169,7 @@ class __AddToCartState extends State<_AddToCart> {
               ? IconButton(
                   icon: Icon(Icons.done),
                   onPressed: () {
-                    Scaffold.of(context).showSnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text("Product added to cart")));
                   },
                 )
