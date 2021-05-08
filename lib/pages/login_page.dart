@@ -43,13 +43,20 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 20.0,
                 ),
-                Text(
-                  "Welcome to Mind Buster $name",
-                  textDirection: TextDirection.ltr,
-                  style: TextStyle(
-                    fontSize: 27.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Text(
+                        "Welcome",
+                        textDirection: TextDirection.ltr,
+                        style: TextStyle(
+                          fontSize: 27.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 20.0,
@@ -108,7 +115,6 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         height: 20.0,
                       ),
-
                       InkWell(
                         onTap: () => moveToHome(context),
                         child: AnimatedContainer(
@@ -127,26 +133,12 @@ class _LoginPageState extends State<LoginPage> {
                                       fontSize: 18),
                                 ),
                           decoration: BoxDecoration(
-                            color: Colors.green[900],
+                            color: Colors.yellow[600],
                             borderRadius: BorderRadius.circular(
                                 (changebutton ? 50.0 : 8.0)),
                           ),
                         ),
                       )
-                      // ElevatedButton(
-                      //   child: Text(
-                      //     "Login",
-                      //     style: TextStyle(
-                      //         fontSize: 18.0,
-                      //         fontWeight: FontWeight.bold),
-                      //   ),
-                      //   style: TextButton.styleFrom(
-                      //     minimumSize: Size(150, 45),
-                      //   ),
-                      //   onPressed: () {
-                      //
-                      //   },
-                      // )
                     ],
                   ),
                 ),

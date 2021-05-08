@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         fontFamily: GoogleFonts.merriweather().fontFamily,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: MyRoutes.homeRoute,
+      initialRoute: MyRoutes.loginRoute,
       routes: {
         "/": (context) => LoginPage(),
         MyRoutes.homeRoute: (context) => HomePage(),

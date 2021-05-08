@@ -1,4 +1,4 @@
-import 'package:app1/models/cart.dart';
+ import 'package:app1/models/cart.dart';
 import 'package:app1/models/catalog.dart';
 import 'package:app1/pages/carts_page.dart';
 import 'package:app1/widgets/ratings.dart';
