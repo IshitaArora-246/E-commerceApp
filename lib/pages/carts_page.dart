@@ -13,34 +13,32 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: Theme.of(context),
-      home: Scaffold(
-        body: SafeArea(
-          child: Container(
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () => Navigator.popAndPushNamed(
-                          (context), MyRoutes.homeRoute),
-                    )
-                  ],
+    return Scaffold(
+      backgroundColor: Colors.grey.shade200,
+      body: SafeArea(
+        child: Container(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () => Navigator.popAndPushNamed(
+                        (context), MyRoutes.homeRoute),
+                  )
+                ],
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(32),
+                  child: _CartList(),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: _CartList(),
-                  ),
-                ),
-                Divider(
-                  height: 10,
-                ),
-                Expanded(child: _CartTotal()),
-              ],
-            ),
+              ),
+              Divider(
+                height: 10,
+              ),
+              Expanded(child: _CartTotal()),
+            ],
           ),
         ),
       ),

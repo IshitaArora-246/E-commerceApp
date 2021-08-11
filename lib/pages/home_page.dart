@@ -24,9 +24,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<int> loadData() async {
-    // final catalogJson =
-    //     await rootBundle.loadString("assets/files/catalog.json");
-
     final response = await http.get(Uri.parse(url));
     final catalogJson = response.body;
     final decodedData = jsonDecode(catalogJson);
@@ -53,8 +50,7 @@ class _HomePageState extends State<HomePage> {
                   Builder(
                       builder: (context) => IconButton(
                           icon: Icon(Icons.menu, color: Colors.lightBlue[900]),
-                          onPressed: () =>
-                              Scaffold.of(context).openDrawer())),
+                          onPressed: () => Scaffold.of(context).openDrawer())),
                   Text("Catalog App",
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -121,11 +117,10 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 50,
+                                    width: 20,
                                   ),
                                   Expanded(
                                     child: Container(
-                                      color: Colors.blue,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -140,10 +135,6 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           SizedBox(height: 10),
                                           Container(
-                                            // width: MediaQuery.of(context)
-                                            //         .size
-                                            //         .width *
-                                            //     0.,
                                             child: Text(item.desc,
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 1,

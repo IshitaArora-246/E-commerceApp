@@ -74,9 +74,11 @@ class ViewProduct extends StatelessWidget {
               Center(child: RatingBox()),
               SizedBox(height: 5),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Text(
-                    "Accusam amet consetetur sit tempor diam aliquyam stet gubergren labore. Dolore sed voluptua accusam et gubergren duo justo, invidunt vero gubergren sanctus sit sed voluptua stet. Est sit sed nonumy est at takimata et ipsum duo, sit magna nonumy sed amet no. Voluptua stet clita."),
+                  "Accusam amet consetetur sit tempor diam aliquyam stet gubergren labore. Dolore sed voluptua accusam et gubergren duo justo, invidunt vero gubergren sanctus sit sed voluptua stet. Est sit sed nonumy est at takimata et ipsum duo, sit magna nonumy sed amet no. Voluptua stet clita.",
+                  textAlign: TextAlign.justify,
+                ),
               ),
               SizedBox(height: 10),
               Text("Price: \$${item.price}",
